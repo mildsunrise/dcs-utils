@@ -1,8 +1,0 @@
-{ "name": "speaker-send"
-, "version": "1.0.0"
-, "description": "Talk through the speaker of a DCS-2121 IP Camera."
-
-, "main": "index.js" 
-, "dependencies": [
-                  ]
-}
