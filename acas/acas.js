@@ -161,7 +161,7 @@ function formatHeader(param1,
   // padding
   buf.writeInt32LE(0, i); i+=4;
   
-  return header;
+  return buf;
 }
 
 

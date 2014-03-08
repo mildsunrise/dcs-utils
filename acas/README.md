@@ -24,7 +24,8 @@ are `Transform` classes that accept the audio stream and output ACAS, and viceve
 ## HTTP interaction
 
 When interacting with the camera to receive or send ACAS streams, applets usually
-send `User-Agent: IP Camera Viewer`, though that's not necessary at all.
+send `User-Agent: IP Camera Viewer`, though that's not necessary at all. Also
+`Content-Type` should be set to `audio/ACAS`.
 
 **Important:** if the server promptly returns `500 Internal Error` while streaming,
 you should reboot the camera and make sure you don't have the `Live Video` page
@@ -71,24 +72,39 @@ STDERR.
 The syntax for both commands is:
 
 ``` bash
-$ node speaker <camera hostname> <user:password>
-$ node mic <camera hostname> <user:password>
+$ node speaker <camera hostname[:port]> <user:password>
+$ node mic <camera hostname[:port]> <user:password>
 ```
 
 
-## Streaming with FFMpeg
+## Streaming to the speaker
 
 You can easily get an appropiate PCM stream for the speaker, as explained in
-[Streaming](#streaming), by using `avconv` or `ffmpeg` (syntax is the same):
+", by using `avconv` or `ffmpeg` (syntax is the same):
 
 ``` bash
 $ avconv <input options> -f s16le -ac 1 -ar 8000 -
 ```
 
-The above will output the stream to STDOUT, so you can pipe it to the `speaker.js`.
+The above will output the stream to STDOUT, so you can pipe it to `speaker.js`.
 
 For example, to send audio from ALSA to the speaker:
 
 ``` bash
 $ avconv -f alsa -i hw:0 -f s16le -ac 1 -ar 8000 - | node speaker 181.237.60.54 admin:superpassword
+```
+
+
+## Streaming from the mic
+
+The stream is 8000 Hz MU-LAW. It's easy to play with `avplay` or `ffplay`:
+
+``` bash
+$ avplay -f mulaw -ar 8000 -
+```
+
+The above will read the stream from STDIN, so you can pipe it to `mic.js`:
+
+``` bash
+$ node mic 181.237.60.54 admin:superpassword | avplay -f mulaw -ar 8000 -
 ```

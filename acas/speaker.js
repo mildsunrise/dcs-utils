@@ -48,7 +48,7 @@ if (module.parent) {
   }
   
   var encoder = new Encoder();
-  var speakerStream = postSpeaker({
+  var speakerStream = sendSpeaker({
     host: process.argv[2],
     auth: process.argv[3]
   });
