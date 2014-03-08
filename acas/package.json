@@ -1,5 +1,5 @@
 { "name": "acas"
-, "version": "1.0.1"
+, "version": "2.0.0"
 , "description": "Handle audio ACAS format used on the DCS-2121 IP camera."
 , "private": true
 
